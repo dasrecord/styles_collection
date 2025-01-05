@@ -42,6 +42,25 @@
     --blessed-lavender :#ae9def;
     --blessed-font: #531a4a;
 
+    /* Pastels */
+    --pastel-red: #ff6961;
+    --pastel-orange: #ffcb77;
+    --pastel-yellow: #ffeead;
+    --pastel-green: #77dd77;
+    --pastel-blue: #aec6cf;
+    --pastel-purple: #b19cd9;
+    --pastel-pink: #ff9ff3;
+    --pastel-brown: #d2b48c;
+    --pastel-gray: #cfcfc4;
+    --pastel-black: #264653;
 
+    /* Neon Colors */
+    --neon-red: #ff355e;
+    --neon-orange: #ff6037;
+    --neon-yellow: #ffec27;
+    --neon-green: #05ffa1;
+    --neon-blue: #00b2ff;
+    --neon-purple: #b967ff;
+    --neon-pink: #ff00f7;
 
 }
