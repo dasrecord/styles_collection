@@ -1,0 +1,47 @@
+:root {
+    /* Primary Colors */
+    --primary-blue: #007bff;
+    --primary-red: #dc3545;
+    --primary-green: #28a745;
+    --primary-yellow: #ffc107;
+
+    /* Neutral Colors */
+    --neutral-white: #ffffff;
+    --neutral-black: #000000;
+    --neutral-gray-100: #f8f9fa;
+    --neutral-gray-200: #e9ecef;
+    --neutral-gray-500: #adb5bd;
+    --neutral-gray-800: #343a40;
+
+    /* Semantic Colors */
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --background-light: #f8f9fa;
+    --background-dark: #212529;
+    --border-color: #dee2e6;
+    --link-color: #0d6efd;
+    --link-hover: #0a58ca;
+
+    /* Accent Colors */
+    --accent-purple: #6f42c1;
+    --accent-pink: #e83e8c;
+    --accent-orange: #fd7e14;
+    --accent-teal: #20c997;
+    --accent-cyan: #17a2b8;
+
+    /* State Colors */
+    --success: #198754;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --info: #0dcaf0;
+
+    /* Custom Colors */
+    --bitcoin-orange: #FF9900;
+    --festivall-baby-blue: #81bdfe;
+    --festivall-blue: #0080ff;
+    --blessed-lavender :#ae9def;
+    --blessed-font: #531a4a;
+
+
+
+}

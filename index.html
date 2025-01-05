@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Swatches</title>
+    <link rel="stylesheet" href="custom.css" />
+    <style>
+      body {
+        text-align: center;
+        font-family: "Courier New", Courier, monospace;
+      }
+      .group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .swatch {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .swatch div {
+        width: 64px;
+        height: 64px;
+        margin-right: 10px;
+        border-radius: 4px;
+      }
+      .swatch span {
+        font-size: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Color Swatches</h1>
+
+    <div class="group">
+      Custom Colors
+      <div class="swatches">
+        <div class="swatch">
+          <div style="background-color: var(--bitcoin-orange)"></div>
+          <span>--bitcoin-orange</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--festivall-baby-blue)"></div>
+          <span>--festivall-baby-blue</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--blessed-lavender)"></div>
+          <span>--blessed-lavender</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--blessed-font)"></div>
+          <span>--blessed-font</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      Primary Colors
+      <div class="swatches">
+        <div class="swatch">
+          <div style="background-color: var(--primary-blue)"></div>
+          <span>--primary-blue</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--primary-red)"></div>
+          <span>--primary-red</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--primary-green)"></div>
+          <span>--primary-green</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--primary-yellow)"></div>
+          <span>--primary-yellow</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      Neutral Colors
+      <div class="swatches">
+        <div class="swatch">
+          <div style="background-color: var(--neutral-white)"></div>
+          <span>--neutral-white</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--neutral-black)"></div>
+          <span>--neutral-black</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--neutral-gray-100)"></div>
+          <span>--neutral-gray-100</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--neutral-gray-200)"></div>
+          <span>--neutral-gray-200</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--neutral-gray-500)"></div>
+          <span>--neutral-gray-500</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--neutral-gray-800)"></div>
+          <span>--neutral-gray-800</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      Semantic Colors
+      <div class="swatches">
+        <div class="swatch">
+          <div style="background-color: var(--text-primary)"></div>
+          <span>--text-primary</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--text-secondary)"></div>
+          <span>--text-secondary</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--background-light)"></div>
+          <span>--background-light</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--background-dark)"></div>
+          <span>--background-dark</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--border-color)"></div>
+          <span>--border-color</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--link-color)"></div>
+          <span>--link-color</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--link-hover)"></div>
+          <span>--link-hover</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      Accent Colors
+      <div class="swatches">
+        <div class="swatch">
+          <div style="background-color: var(--accent-purple)"></div>
+          <span>--accent-purple</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--accent-pink)"></div>
+          <span>--accent-pink</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--accent-orange)"></div>
+          <span>--accent-orange</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--accent-teal)"></div>
+          <span>--accent-teal</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--accent-cyan)"></div>
+          <span>--accent-cyan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      State Colors
+      <div class="swatches">
+        <div class="swatch">
+          <div style="background-color: var(--success)"></div>
+          <span>--success</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--warning)"></div>
+          <span>--warning</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--danger)"></div>
+          <span>--danger</span>
+        </div>
+        <div class="swatch">
+          <div style="background-color: var(--info)"></div>
+          <span>--info</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
