@@ -43,9 +43,23 @@
         margin: 0 auto;
         border-radius: 4px;
       }
+      .controls {
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+      }
+      input[type="range"] {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+      }
+      .control {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        margin-bottom: 10px;
+      }
     </style>
     <script>
-      function hslToRgb(h, s, l) {
+      function hslToRgba(h, s, l, a) {
         s /= 100;
         l /= 100;
         let c = (1 - Math.abs(2 * l - 1)) * s;
@@ -82,7 +96,7 @@
         r = Math.round((r + m) * 255);
         g = Math.round((g + m) * 255);
         b = Math.round((b + m) * 255);
-        return `rgb(${r}, ${g}, ${b})`;
+        return `rgba(${r}, ${g}, ${b}, ${a})`;
       }
 
       function rgbToHsl(r, g, b) {
@@ -121,7 +135,8 @@
         const red = document.getElementById("red").value;
         const green = document.getElementById("green").value;
         const blue = document.getElementById("blue").value;
-        const color = `rgb(${red}, ${green}, ${blue})`;
+        const alpha = document.getElementById("alpha").value;
+        const color = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
         document.getElementById("tester").style.backgroundColor = color;
         document.getElementById("color_rgb").textContent = color;
         document.getElementById("color_hsl").textContent = rgbToHsl(
@@ -135,13 +150,15 @@
         const hue = document.getElementById("hue").value;
         const saturation = document.getElementById("saturation").value;
         const lightness = document.getElementById("lightness").value;
-        const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        const alpha = document.getElementById("alpha").value;
+        const color = `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
         document.getElementById("tester").style.backgroundColor = color;
         document.getElementById("color_hsl").textContent = color;
-        document.getElementById("color_rgb").textContent = hslToRgb(
+        document.getElementById("color_rgb").textContent = hslToRgba(
           hue,
           saturation,
-          lightness
+          lightness,
+          alpha
         );
       }
 
@@ -157,106 +174,109 @@
   <body>
     <h1>TESTER</h1>
     current color:<br />
-    <span id="color_hsl">hsl(0, 100%, 50%)</span>
-    <span id="color_rgb">rgb(255, 0, 0)</span>
+    <span id="color_hsl">hsla(0, 100%, 50%, 1)</span>
+    <span id="color_rgb">rgba(255, 0, 0, 1)</span>
     <div id="tester" style="background-color: hsl(0, 100%, 50%)"></div>
-    <div>
-      <label for="hue">Hue:</label>
-      <input
-        type="range"
-        id="hue"
-        name="hue"
-        min="0"
-        max="360"
-        value="0"
-        oninput="updateColor()"
-      />
+    <div class="controls">
+      <div class="control">
+        <label for="hue">Hue:</label>
+        <input
+          type="range"
+          id="hue"
+          name="hue"
+          min="0"
+          max="360"
+          value="0"
+          oninput="updateColor()"
+        />
+      </div>
+      <div class="control">
+        <label for="saturation">Saturation:</label>
+        <input
+          type="range"
+          id="saturation"
+          name="saturation"
+          min="0"
+          max="100"
+          value="100"
+          oninput="updateColor()"
+        />
+      </div>
+      <div class="control">
+        <label for="lightness">Lightness:</label>
+        <input
+          type="range"
+          id="lightness"
+          name="lightness"
+          min="0"
+          max="100"
+          value="50"
+          oninput="updateColor()"
+        />
+      </div>
+      <div class="control">
+        <label for="alpha">Alpha:</label>
+        <input
+          type="range"
+          id="alpha"
+          name="alpha"
+          min="0"
+          max="1"
+          step="0.01"
+          value="1"
+          oninput="updateColor()"
+        />
+      </div>
+      <div class="control">
+        <label for="red">Red:</label>
+        <input
+          type="range"
+          id="red"
+          name="red"
+          min="0"
+          max="255"
+          value="255"
+          oninput="updateRGBColor()"
+        />
+      </div>
+      <div class="control">
+        <label for="green">Green:</label>
+        <input
+          type="range"
+          id="green"
+          name="green"
+          min="0"
+          max="255"
+          value="0"
+          oninput="updateRGBColor()"
+        />
+      </div>
+      <div class="control">
+        <label for="blue">Blue:</label>
+        <input
+          type="range"
+          id="blue"
+          name="blue"
+          min="0"
+          max="255"
+          value="0"
+          oninput="updateRGBColor()"
+        />
+      </div>
+      <div class="control">
+        <label for="border-radius">Border Radius:</label>
+        <input
+          type="range"
+          id="border-radius"
+          name="border-radius"
+          min="0"
+          max="50"
+          value="4"
+          oninput="updateBorderRadius()"
+        />
+      </div>
     </div>
-    <div>
-      <label for="saturation">Saturation:</label>
-      <input
-        type="range"
-        id="saturation"
-        name="saturation"
-        min="0"
-        max="100"
-        value="100"
-        oninput="updateColor()"
-      />
-    </div>
-    <div>
-      <label for="lightness">Lightness:</label>
-      <input
-        type="range"
-        id="lightness"
-        name="lightness"
-        min="0"
-        max="100"
-        value="50"
-        oninput="updateColor()"
-      />
-    </div>
-    <div>
-      <label for="alpha">Alpha:</label>
-      <input
-        type="range"
-        id="alpha"
-        name="alpha"
-        min="0"
-        max="1"
-        step="0.01"
-        value="1"
-        oninput="updateColor()"
-      />
-    </div>
-    <div>
-      <label for="red">Red:</label>
-      <input
-        type="range"
-        id="red"
-        name="red"
-        min="0"
-        max="255"
-        value="255"
-        oninput="updateRGBColor()"
-      />
-    </div>
-    <div>
-      <label for="green">Green:</label>
-      <input
-        type="range"
-        id="green"
-        name="green"
-        min="0"
-        max="255"
-        value="0"
-        oninput="updateRGBColor()"
-      />
-    </div>
-    <div>
-      <label for="blue">Blue:</label>
-      <input
-        type="range"
-        id="blue"
-        name="blue"
-        min="0"
-        max="255"
-        value="0"
-        oninput="updateRGBColor()"
-      />
-    </div>
-    <div>
-      <label for="border-radius">Border Radius:</label>
-      <input
-        type="range"
-        id="border-radius"
-        name="border-radius"
-        min="0"
-        max="50"
-        value="4"
-        oninput="updateBorderRadius()"
-      />
-    </div>
+
     <main>
       <div class="group">
         Custom Colors
