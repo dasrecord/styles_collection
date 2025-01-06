@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Color Swatches</title>
     <link rel="stylesheet" href="custom.css" />
-
     <style>
       body {
         text-align: center;
@@ -29,7 +28,6 @@
         align-items: center;
         margin-bottom: 10px;
       }
-
       .swatch div {
         width: 64px;
         height: 64px;
@@ -39,235 +37,480 @@
       .swatch span {
         font-size: 10px;
       }
+      #tester {
+        width: 300px;
+        height: 200px;
+        margin: 0 auto;
+        border-radius: 4px;
+      }
     </style>
+    <script>
+      function hslToRgb(h, s, l) {
+        s /= 100;
+        l /= 100;
+        let c = (1 - Math.abs(2 * l - 1)) * s;
+        let x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+        let m = l - c / 2;
+        let r = 0,
+          g = 0,
+          b = 0;
+        if (0 <= h && h < 60) {
+          r = c;
+          g = x;
+          b = 0;
+        } else if (60 <= h && h < 120) {
+          r = x;
+          g = c;
+          b = 0;
+        } else if (120 <= h && h < 180) {
+          r = 0;
+          g = c;
+          b = x;
+        } else if (180 <= h && h < 240) {
+          r = 0;
+          g = x;
+          b = c;
+        } else if (240 <= h && h < 300) {
+          r = x;
+          g = 0;
+          b = c;
+        } else if (300 <= h && h < 360) {
+          r = c;
+          g = 0;
+          b = x;
+        }
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+        return `rgb(${r}, ${g}, ${b})`;
+      }
+
+      function rgbToHsl(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        let max = Math.max(r, g, b),
+          min = Math.min(r, g, b);
+        let h,
+          s,
+          l = (max + min) / 2;
+        if (max == min) {
+          h = s = 0;
+        } else {
+          let d = max - min;
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+          switch (max) {
+            case r:
+              h = (g - b) / d + (g < b ? 6 : 0);
+              break;
+            case g:
+              h = (b - r) / d + 2;
+              break;
+            case b:
+              h = (r - g) / d + 4;
+              break;
+          }
+          h *= 60;
+        }
+        s = s * 100;
+        l = l * 100;
+        return `hsl(${Math.round(h)}, ${Math.round(s)}%, ${Math.round(l)}%)`;
+      }
+
+      function updateRGBColor() {
+        const red = document.getElementById("red").value;
+        const green = document.getElementById("green").value;
+        const blue = document.getElementById("blue").value;
+        const color = `rgb(${red}, ${green}, ${blue})`;
+        document.getElementById("tester").style.backgroundColor = color;
+        document.getElementById("color_rgb").textContent = color;
+        document.getElementById("color_hsl").textContent = rgbToHsl(
+          red,
+          green,
+          blue
+        );
+      }
+
+      function updateColor() {
+        const hue = document.getElementById("hue").value;
+        const saturation = document.getElementById("saturation").value;
+        const lightness = document.getElementById("lightness").value;
+        const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        document.getElementById("tester").style.backgroundColor = color;
+        document.getElementById("color_hsl").textContent = color;
+        document.getElementById("color_rgb").textContent = hslToRgb(
+          hue,
+          saturation,
+          lightness
+        );
+      }
+
+      function updateBorderRadius() {
+        const borderRadius = document.getElementById("border-radius").value;
+        document.getElementById(
+          "tester"
+        ).style.borderRadius = `${borderRadius}px`;
+      }
+    </script>
   </head>
 
   <body>
-<h1>Color Swatches</h1>
-<div class="group">
-  Custom Colors
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #FF9900"></div>
-      <span>--bitcoin-orange</span>
+    <h1>TESTER</h1>
+    current color:<br />
+    <span id="color_hsl">hsl(0, 100%, 50%)</span>
+    <span id="color_rgb">rgb(255, 0, 0)</span>
+    <div id="tester" style="background-color: hsl(0, 100%, 50%)"></div>
+    <div>
+      <label for="hue">Hue:</label>
+      <input
+        type="range"
+        id="hue"
+        name="hue"
+        min="0"
+        max="360"
+        value="0"
+        oninput="updateColor()"
+      />
     </div>
-    <div class="swatch">
-      <div style="background-color: #81bdfe"></div>
-      <span>--festivall-baby-blue</span>
+    <div>
+      <label for="saturation">Saturation:</label>
+      <input
+        type="range"
+        id="saturation"
+        name="saturation"
+        min="0"
+        max="100"
+        value="100"
+        oninput="updateColor()"
+      />
     </div>
-    <div class="swatch">
-      <div style="background-color: #0080ff"></div>
-      <span>--festivall-blue</span>
+    <div>
+      <label for="lightness">Lightness:</label>
+      <input
+        type="range"
+        id="lightness"
+        name="lightness"
+        min="0"
+        max="100"
+        value="50"
+        oninput="updateColor()"
+      />
     </div>
-    <div class="swatch">
-      <div style="background-color: #ae9def"></div>
-      <span>--blessed-lavender</span>
+    <div>
+      <label for="alpha">Alpha:</label>
+      <input
+        type="range"
+        id="alpha"
+        name="alpha"
+        min="0"
+        max="1"
+        step="0.01"
+        value="1"
+        oninput="updateColor()"
+      />
     </div>
-    <div class="swatch">
-      <div style="background-color: #531a4a"></div>
-      <span>--blessed-font</span>
+    <div>
+      <label for="red">Red:</label>
+      <input
+        type="range"
+        id="red"
+        name="red"
+        min="0"
+        max="255"
+        value="255"
+        oninput="updateRGBColor()"
+      />
     </div>
-  </div>
-</div><div class="group">
-  Primary Colors
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #007bff"></div>
-      <span>--primary-blue</span>
+    <div>
+      <label for="green">Green:</label>
+      <input
+        type="range"
+        id="green"
+        name="green"
+        min="0"
+        max="255"
+        value="0"
+        oninput="updateRGBColor()"
+      />
     </div>
-    <div class="swatch">
-      <div style="background-color: #dc3545"></div>
-      <span>--primary-red</span>
+    <div>
+      <label for="blue">Blue:</label>
+      <input
+        type="range"
+        id="blue"
+        name="blue"
+        min="0"
+        max="255"
+        value="0"
+        oninput="updateRGBColor()"
+      />
     </div>
-    <div class="swatch">
-      <div style="background-color: #28a745"></div>
-      <span>--primary-green</span>
+    <div>
+      <label for="border-radius">Border Radius:</label>
+      <input
+        type="range"
+        id="border-radius"
+        name="border-radius"
+        min="0"
+        max="50"
+        value="4"
+        oninput="updateBorderRadius()"
+      />
     </div>
-    <div class="swatch">
-      <div style="background-color: #ffc107"></div>
-      <span>--primary-yellow</span>
-    </div>
-  </div>
-</div><div class="group">
-  Neutral Colors
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #ffffff"></div>
-      <span>--neutral-white</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #000000"></div>
-      <span>--neutral-black</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #f8f9fa"></div>
-      <span>--neutral-gray-100</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #e9ecef"></div>
-      <span>--neutral-gray-200</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #adb5bd"></div>
-      <span>--neutral-gray-500</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #343a40"></div>
-      <span>--neutral-gray-800</span>
-    </div>
-  </div>
-</div><div class="group">
-  Semantic Colors
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #212529"></div>
-      <span>--text-primary</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #6c757d"></div>
-      <span>--text-secondary</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #f8f9fa"></div>
-      <span>--background-light</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #212529"></div>
-      <span>--background-dark</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #dee2e6"></div>
-      <span>--border-color</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #0d6efd"></div>
-      <span>--link-color</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #0a58ca"></div>
-      <span>--link-hover</span>
-    </div>
-  </div>
-</div><div class="group">
-  Accent Colors
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #6f42c1"></div>
-      <span>--accent-purple</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #e83e8c"></div>
-      <span>--accent-pink</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #fd7e14"></div>
-      <span>--accent-orange</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #20c997"></div>
-      <span>--accent-teal</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #17a2b8"></div>
-      <span>--accent-cyan</span>
-    </div>
-  </div>
-</div><div class="group">
-  State Colors
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #198754"></div>
-      <span>--success</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #ffc107"></div>
-      <span>--warning</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #dc3545"></div>
-      <span>--danger</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #0dcaf0"></div>
-      <span>--info</span>
-    </div>
-  </div>
-</div><div class="group">
-  Pastels
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #ff6961"></div>
-      <span>--pastel-red</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #ffcb77"></div>
-      <span>--pastel-orange</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #ffeead"></div>
-      <span>--pastel-yellow</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #77dd77"></div>
-      <span>--pastel-green</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #aec6cf"></div>
-      <span>--pastel-blue</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #b19cd9"></div>
-      <span>--pastel-purple</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #ff9ff3"></div>
-      <span>--pastel-pink</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #d2b48c"></div>
-      <span>--pastel-brown</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #cfcfc4"></div>
-      <span>--pastel-gray</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #264653"></div>
-      <span>--pastel-black</span>
-    </div>
-  </div>
-</div><div class="group">
-  Neon Colors
-  <div class="swatches">
-    <div class="swatch">
-      <div style="background-color: #ff355e"></div>
-      <span>--neon-red</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #ff6037"></div>
-      <span>--neon-orange</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #ffec27"></div>
-      <span>--neon-yellow</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #05ffa1"></div>
-      <span>--neon-green</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #00b2ff"></div>
-      <span>--neon-blue</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #b967ff"></div>
-      <span>--neon-purple</span>
-    </div>
-    <div class="swatch">
-      <div style="background-color: #ff00f7"></div>
-      <span>--neon-pink</span>
-    </div>
-  </div>
-</div>
-</body>
+    <main>
+      <div class="group">
+        Custom Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #ff9900"></div>
+            <span>--bitcoin-orange</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #81bdfe"></div>
+            <span>--festivall-baby-blue</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #0080ff"></div>
+            <span>--festivall-blue</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ae9def"></div>
+            <span>--blessed-lavender</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #531a4a"></div>
+            <span>--blessed-font</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #767a44"></div>
+            <span>--reunion-frog-green</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        Laurel's Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #ecd8ca"></div>
+            <span>--pink-ground</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #edc8ca"></div>
+            <span>--pink-ground-variation</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #eccdd5"></div>
+            <span>--ballet-slipper</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        Primary Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #007bff"></div>
+            <span>--primary-blue</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #dc3545"></div>
+            <span>--primary-red</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #28a745"></div>
+            <span>--primary-green</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ffc107"></div>
+            <span>--primary-yellow</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        Neutral Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #ffffff"></div>
+            <span>--neutral-white</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #000000"></div>
+            <span>--neutral-black</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #f8f9fa"></div>
+            <span>--neutral-gray-100</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #e9ecef"></div>
+            <span>--neutral-gray-200</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #adb5bd"></div>
+            <span>--neutral-gray-500</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #343a40"></div>
+            <span>--neutral-gray-800</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        Semantic Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #212529"></div>
+            <span>--text-primary</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #6c757d"></div>
+            <span>--text-secondary</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #f8f9fa"></div>
+            <span>--background-light</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #212529"></div>
+            <span>--background-dark</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #dee2e6"></div>
+            <span>--border-color</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #0d6efd"></div>
+            <span>--link-color</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #0a58ca"></div>
+            <span>--link-hover</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        Accent Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #6f42c1"></div>
+            <span>--accent-purple</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #e83e8c"></div>
+            <span>--accent-pink</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #fd7e14"></div>
+            <span>--accent-orange</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #20c997"></div>
+            <span>--accent-teal</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #17a2b8"></div>
+            <span>--accent-cyan</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        State Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #198754"></div>
+            <span>--success</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ffc107"></div>
+            <span>--warning</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #dc3545"></div>
+            <span>--danger</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #0dcaf0"></div>
+            <span>--info</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        Pastels
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #ff6961"></div>
+            <span>--pastel-red</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ffcb77"></div>
+            <span>--pastel-orange</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ffeead"></div>
+            <span>--pastel-yellow</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #77dd77"></div>
+            <span>--pastel-green</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #aec6cf"></div>
+            <span>--pastel-blue</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #b19cd9"></div>
+            <span>--pastel-purple</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ff9ff3"></div>
+            <span>--pastel-pink</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #d2b48c"></div>
+            <span>--pastel-brown</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #cfcfc4"></div>
+            <span>--pastel-gray</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #264653"></div>
+            <span>--pastel-black</span>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        Neon Colors
+        <div class="swatches">
+          <div class="swatch">
+            <div style="background-color: #ff355e"></div>
+            <span>--neon-red</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ff6037"></div>
+            <span>--neon-orange</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ffec27"></div>
+            <span>--neon-yellow</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #05ffa1"></div>
+            <span>--neon-green</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #00b2ff"></div>
+            <span>--neon-blue</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #b967ff"></div>
+            <span>--neon-purple</span>
+          </div>
+          <div class="swatch">
+            <div style="background-color: #ff00f7"></div>
+            <span>--neon-pink</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

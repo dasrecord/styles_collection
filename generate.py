@@ -34,7 +34,7 @@ def generate_swatches_html(css_content):
             groups[-1]['variables'].append({'name': f'--{var_name}', 'value': var_value})
 
     # Generate HTML
-    html = '<h1>Color Swatches</h1>\n'
+    html = ''
     for group in groups:
         html += f'<div class="group">\n  {group["name"]}\n  <div class="swatches">'
         for variable in group['variables']:
@@ -47,7 +47,7 @@ def replace_body_content(html_file_path, new_content):
         with open(html_file_path, 'r') as file:
             html_content = file.read()
         
-        body_regex = re.compile(r'(<body[^>]*>)([\s\S]*?)(</body>)', re.IGNORECASE)
+        body_regex = re.compile(r'(<main[^>]*>)([\s\S]*?)(</main>)', re.IGNORECASE)
         updated_html_content = body_regex.sub(rf'\1\n{new_content}\n\3', html_content)
         
         with open(html_file_path, 'w') as file:
