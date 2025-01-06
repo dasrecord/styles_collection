@@ -1,4 +1,11 @@
 :root {
+    /* Custom Colors */
+    --bitcoin-orange: #FF9900;
+    --festivall-baby-blue: #81bdfe;
+    --festivall-blue: #0080ff;
+    --blessed-lavender :#ae9def;
+    --blessed-font: #531a4a;
+    
     /* Primary Colors */
     --primary-blue: #007bff;
     --primary-red: #dc3545;
@@ -34,13 +41,6 @@
     --warning: #ffc107;
     --danger: #dc3545;
     --info: #0dcaf0;
-
-    /* Custom Colors */
-    --bitcoin-orange: #FF9900;
-    --festivall-baby-blue: #81bdfe;
-    --festivall-blue: #0080ff;
-    --blessed-lavender :#ae9def;
-    --blessed-font: #531a4a;
 
     /* Pastels */
     --pastel-red: #ff6961;
