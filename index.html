@@ -65,6 +65,14 @@
         margin-bottom: 5px;
       }
       input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: black;
+        height: 3px;
+        /* border-radius: 1px; */
+        outline: none;
+
+        transition: opacity 0.2s;
         width: 100%;
         margin-left: 10px;
       }
@@ -202,7 +210,6 @@
 
   <body>
     <h1>TESTER</h1>
-    current color:<br />
     <span id="color_hsl">hsla(0, 100%, 50%, 1)</span><br />
     <span id="color_rgb">rgba(255, 0, 0, 1)</span><br />
     <span id="color_hex">#ff0000</span><br />
